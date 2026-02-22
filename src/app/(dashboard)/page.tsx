@@ -1,12 +1,16 @@
 import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button, Flex, Spinner } from '@chakra-ui/react';
-
 import { getApplications } from '@/constants';
 import { waitFor } from '@/utils';
 import { deleteApplication } from '../actions';
 import { PageShell } from '@/components/page-shell';
 import { ApplicationsList, type ApplicationsListProps } from '@/views/applications-list';
+
+export const metadata: Metadata = {
+  title: 'Applications',
+};
 
 const fetchApplications = async (): Promise<ApplicationsListProps['applications']> => {
   const currentApplications = getApplications();

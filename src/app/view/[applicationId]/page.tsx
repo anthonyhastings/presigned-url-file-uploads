@@ -1,7 +1,20 @@
+import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getApplications } from '@/constants';
 import { waitFor } from '@/utils';
 import { ViewApplication } from '@/views/view-application';
+
+type PageProps = {
+  params: Promise<{ applicationId: string }>;
+};
+
+export const generateMetadata = async ({ params }: PageProps) => {
+  const { applicationId } = await params;
+
+  const targetApplication = await fetchApplicationById(applicationId);
+
+  return { title: targetApplication ? `${targetApplication.name} — Application` : 'Application' } satisfies Metadata;
+};
 
 const fetchApplicationById = async (applicationId: string) => {
   console.log('SSR::fetchApplicationById', applicationId);
@@ -11,7 +24,7 @@ const fetchApplicationById = async (applicationId: string) => {
   return getApplications().find((application) => application.id === applicationId);
 };
 
-const ViewApplicationPage = async ({ params }: { params: Promise<{ applicationId: string }> }) => {
+const ViewApplicationPage = async ({ params }: PageProps) => {
   const { applicationId } = await params;
 
   const targetApplication = await fetchApplicationById(applicationId);

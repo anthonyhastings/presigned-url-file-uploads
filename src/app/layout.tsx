@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import { type Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Container } from '@chakra-ui/react';
 import { Toaster } from '@/components/ui/toaster';
